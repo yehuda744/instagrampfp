@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
 // step two: parse that information and store the profile picture in a variable
 // step three: res.send that profile picture
 app.post('/search', (req, res) => {
+    // makes a new variable from the input and u write .search because the object we sent from main was called search and it had the input in it
     var search = req.body.search;
     var myCallback = (data) => {
         data = JSON.parse(data);
