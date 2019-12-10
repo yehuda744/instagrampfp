@@ -1,10 +1,13 @@
 //public is the directory that is essentialy public to the entire world
 //everything in app.js is private
 var express = require('express');
+var bodyParser = require('body-parser');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var app = express();
 
+app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public' ));
 app.get('/', (req, res) => {
     res.render('index')
@@ -13,16 +16,12 @@ app.get('/', (req, res) => {
 // step two: parse that information and store the profile picture in a variable
 // step three: res.send that profile picture
 app.post('/search', (req, res) => {
-    // var myCallback = (data) => {
-    //     data = JSON.parse(data);
-    //     res.send(data);
-    // }
-    console.log(req.body);
-    res.send({
-        name:req.body,
-        id: 5
-            });
-    // HttpGetAsync('https://www.instagram.com/champagnepapi/?__a=1', myCallback)
+    var search = req.body.search;
+    var myCallback = (data) => {
+        data = JSON.parse(data);
+        res.send(data);
+    }
+    HttpGetAsync(`https://www.instagram.com/${search}/?__a=1`, myCallback)
 });
 
 
