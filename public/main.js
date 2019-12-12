@@ -1,6 +1,7 @@
 
 $(document).on('submit', '#form', function(e){
     e.preventDefault();
+    // makes a variable from the input of the user in the form
     var input = document.getElementById('input').value;
     Submit(input);
     console.log(input);

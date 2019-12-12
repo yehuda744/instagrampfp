@@ -22,6 +22,7 @@ app.post('/search', (req, res) => {
         data = JSON.parse(data);
         res.send(data);
     }
+    // requests from instagram the profile picture of the url that we send it and search equals the url of the profile pic because thats req body
     HttpGetAsync(`https://www.instagram.com/${search}/?__a=1`, myCallback)
 });
 
