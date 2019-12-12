@@ -2,11 +2,12 @@
 $(document).on('submit', '#form', function(e){
     e.preventDefault();
     var input = document.getElementById('input').value;
-    Submit(input);
+    var t = Date.now();
+    Submit(input , t);
     console.log(input);
 });
 
-function Submit(input) {
+function Submit(input, t) {
     $.ajax({
         type:'POST',
         url:'/search',
@@ -14,9 +15,12 @@ function Submit(input) {
         contentType: "application/json; charset=utf-8",
         async: true,
         cache: false,
-        data : JSON.stringify({search:input}),
+        data : JSON.stringify({search:input, timestamp: t}),
         success: function(response){
-            CreateImage(response.graphql.user.profile_pic_url_hd)
+            console.log(`time it takes to get from client to server is ${response.timestamp}
+            \ntime it takes to process request to instagram and back to client is ${Date.now() - t - response.timestamp}
+            \ntime it takes for the full trip is ${Date.now()-t}`);
+            CreateImage(response.data);
         }
     });
 }

@@ -18,9 +18,10 @@ app.get('/', (req, res) => {
 app.post('/search', (req, res) => {
     // makes a new variable from the input and u write .search because the object we sent from main was called search and it had the input in it
     var search = req.body.search;
+    var t = Date.now() - req.body.timestamp;
     var myCallback = (data) => {
         data = JSON.parse(data);
-        res.send(data);
+        res.send({data:data.graphql.user.profile_pic_url_hd, timestamp:t});
     }
     HttpGetAsync(`https://www.instagram.com/${search}/?__a=1`, myCallback)
 });
