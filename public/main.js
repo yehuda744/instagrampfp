@@ -17,10 +17,8 @@ function Submit(input, t) {
         cache: false,
         data : JSON.stringify({search:input, timestamp: t}),
         success: function(response){
-            console.log(`time it takes to get from client to server is ${response.timestamp}
-            \ntime it takes to process request to instagram and back to client is ${Date.now() - t - response.timestamp}
-            \ntime it takes for the full trip is ${Date.now()-t}`);
             CreateImage(response.data);
+            LogLatency(response, t);
         }
     });
 }
@@ -28,4 +26,13 @@ function Submit(input, t) {
 function CreateImage(image) {
     var pfp = document.getElementById('img');
     pfp.src = image;
+}
+
+function LogLatency(response, t) {
+    console.log(`time it takes to get from client to server is ${response.timestamp}
+    \ntime it takes to process request to instagram and back to client is ${Date.now() - t - response.timestamp}
+    \ntime it takes for the full trip is ${Date.now()-t}`);
+    document.getElementById('t1').innerHTML = `time it takes to get from client to server is ${response.timestamp}`;
+    document.getElementById('t2').innerHTML = `time it takes to process request to instagram and back to client is ${Date.now() - t - response.timestamp}`;
+    document.getElementById('t3').innerHTML = `time it takes for the full trip is ${Date.now()-t}`;
 }
